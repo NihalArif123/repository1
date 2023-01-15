@@ -1,7 +1,7 @@
 <?php
 //include_once "database.php";
 
-class Facadee {
+class Facade {
   
 //request form
   function insert_request($des,$t,$d){
@@ -47,67 +47,32 @@ else{
   $con->close();
   }
   } 
-  function insert_requistion(){} 
   function insert_route($route){}
-  function insert_sch($b, $d, $routeObject,$tim){
-    $con = new mysqli("localhost", "root", "", "bus managment system",3306);
-    /* check connection */
-    if (mysqli_connect_errno()) {
-  printf("Connection failed: %s\n", mysqli_connect_error());
-  exit();
-}
-else{
-    $my_query = "INSERT INTO schedule (Busno,date, route, time) VALUES ('$b', '$d', '$routeObject','$tim')";
-    $result = mysqli_query($con, $my_query);
-  if ($result) {
-    echo "New record created successfully";
-  } else {
-    echo "Error: " . $result . "<br>" . $con->error;
-  }
-  
-  $con->close();
-  }
-  }
-  function get_sch(){
-    $con = new mysqli("localhost", "root", "", "bus managment system",3306);
-    /* check connection */
-    if (mysqli_connect_errno()) {
-  printf("Connection failed: %s\n", mysqli_connect_error());
-  exit();
-}
-else{
-    $my_query = "select * from schedule ";
-    $result = mysqli_query($con, $my_query);
-  if ($result) {
-    return $result;
-  } else {
-    
-    return false;
-  }
-  
-  $con->close();
-  }
-  }
+  function insert_sch($schedule){}
   function insert_seat(){}
   function insert_track(){}
-  function checkValid($acc)
+
+  function checkValid($username,$password)
    {
 
-      $username = $acc->getuserName();
-      $password = $acc->getpassword();
-      $con = new mysqli("localhost", "root", "", "bus managment system",3306);
-      $query = "SELECT * FROM students WHERE userName = '$username' AND password = '$password'";
+      //$username = $acc->getuserName();
+      //$password = $acc->getpassword();
+      $con = new mysqli("localhost", "root", "", "bus management system",3306);
+      $query = "SELECT * FROM students WHERE Email = '$username' AND password = '$password'";
       $results = mysqli_query($con, $query);
 
       if (mysqli_num_rows($results) > 0) {
-         $row = mysqli_fetch_row($results);
+         //$row = mysqli_fetch_row($results);
 
-         $query1 = "SELECT * FROM students WHERE userName = '$row[0]'";
-         $results1 = mysqli_query($con, $query1);
-         $row2 = mysqli_fetch_row($results1);
-         return $row2[0];
+         //$query1 = "SELECT * FROM students WHERE userName = '$row[0]'";
+         //$results1 = mysqli_query($con, $query1);
+         //$row2 = mysqli_fetch_row($results1);
+         //return $row2[0];
+         header('location: requisition.php');
       }
-      return -1;
+      else{
+        echo("User not found");
+      }
    }
 }
 
